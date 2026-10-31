@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#229ed9">
+<title>SLAYER FX™ — Funded Accounts & P2P USD</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+    --bg:#06111f;
+    --card:#0c1b2b;
+    --blue:#20a7ff;
+    --blue2:#075fbe;
+    --gold:#f2b705;
+    --gold-light:#ffd95a;
+    --white:#fff;
+    --silver:#b9c2cc;
+    --muted:#7f8b98;
+    --green:#22c55e;
+    --red:#ef4444;
+    --yellow:#f5b942;
+    --border:rgba(56,176,255,.22);
+}
+
+body{
+    background:
+    radial-gradient(circle at top,#12395b 0%,#06111f 48%,#020812 100%);
+    color:#fff;
+    min-height:100vh;
+}
+
+.app{
+    width:100%;
+    max-width:520px;
+    margin:auto;
+    min-height:100vh;
+    padding-bottom:85px;
+}
+
+.bottom-nav{gap:2px;padding-left:4px;padding-right:4px}
+.nav-btn{font-size:10px;min-width:0;padding:8px 3px}
+.nav-icon{font-size:17px}
+.rules-panel{line-height:1.8}
+input,select{width:100%;padding:13px;border-radius:10px;border:1px solid var(--border);background:#071626;color:#fff;outline:none}
+.form-group{margin:12px 0}
+.form-label{display:block;color:var(--silver);font-size:12px;margin-bottom:7px}
+.payment-line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.amount{color:var(--gold-light);font-size:20px}
+/* HEADER */
+.header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(5,8,13,.88);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+    padding:16px 18px;
+}
+
+.header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--gold),#8b6423);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    box-shadow:0 8px 25px rgba(201,154,59,.22);
+     animation:logoPulse 3.2s ease-in-out infinite;
+}
+
+.brand-title{
+    font-size:17px;
+    font-weight:900;
+}
+
+.brand-sub{
+    color:var(--silver);
+    font-size:11px;
+    margin-top:2px;
+}
+
+/* PAGES */
+.page{
+    display:none;
+    padding:18px;
+    animation:fade .25s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(5px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* HERO */
+.hero{
+    padding:25px 5px 18px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(34,158,217,.12);
+    color:#70cbf5;
+    border:1px solid rgba(34,158,217,.25);
+    padding:7px 11px;
+    border-radius:30px;
+    font-size:11px;
+    font-weight:800;
+    margin-bottom:14px;
+}
+
+.hero h1{
+    font-size:32px;
+    line-height:1.08;
+    letter-spacing:-1px;
+}
+
+.hero h1 span{
+    color:var(--blue);
+}
+
+.hero p{
+    color:var(--silver);
+    font-size:14px;
+    line-height:1.6;
+    margin-top:12px;
+}
+
+/* CARDS */
+.card{
+    background:linear-gradient(
+        145deg,
+        rgba(16,25,35,.96),
+        rgba(7,12,18,.96)
+    );
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:14px;
+    box-shadow:0 12px 35px rgba(0,0,0,.2);
+}
+
+.product-card{
+    position:relative;
+    overflow:hidden;
+}
+
+.product-card::before{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-70px;
+    top:-70px;
+    background:rgba(34,158,217,.1);
+    border-radius:50%;
+}
+
+.product-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.product-name{
+    font-size:18px;
+    font-weight:900;
+}
+
+.product-type{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:5px;
+}
+
+.price{
+    color:#fff;
+    font-size:22px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.price small{
+    font-size:11px;
+    color:var(--silver);
+    font-weight:600;
+}
+
+.product-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:18px;
+    gap:12px;
+}
+
+/* BUTTONS */
+.btn{
+    border:0;
+    outline:0;
+    cursor:pointer;
+    border-radius:12px;
+    padding:12px 16px;
+    font-size:13px;
+    font-weight:800;
+    transition:.2s;
+}
+
+.btn:active{
+    transform:scale(.97);
+}
+
+.btn-primary{
+    background:var(--blue);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(34,158,217,.2);
+}
+
+.btn-primary:hover{
+    background:var(--blue2);
+}
+
+.btn-secondary{
+    background:#17212c;
+    color:#fff;
+    border:1px solid var(--border);
+}
+
+.btn-danger{
+    background:rgba(239,68,68,.12);
+    color:#ff7777;
+    border:1px solid rgba(239,68,68,.2);
+}
+
+.btn-success{
+    background:rgba(34,197,94,.12);
+    color:#55dc7f;
+    border:1px solid rgba(34,197,94,.2);
+}
+
+.full{
+    width:100%;
+}
+
+/* SECTION */
+.section-title{
+    font-size:18px;
+    font-weight:900;
+    margin:20px 0 12px;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+/* INFO */
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.info-box{
+    background:#091019;
+    border:1px solid var(--border);
+    padding:14px;
+    border-radius:14px;
+}
+
+.info-box strong{
+    display:block;
+    font-size:14px;
+}
+
+.info-box span{
+    display:block;
+    color:var(--muted);
+    font-size:11px;
+    margin-top:5px;
+}
+
+/* PAYMENT */
+.payment-box{
+    text-align:center;
+}
+
+.payment-icon{
+    width:65px;
+    height:65px;
+    margin:5px auto 14px;
+    border-radius:20px;
+    background:#12b981;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    font-weight:900;
+}
+
+.payment-name{
+    font-size:21px;
+    font-weight:900;
+}
+
+.payment-line{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+}
+
+.payment-line:last-child{
+    border-bottom:0;
+}
+
+.payment-label{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.payment-value{
+    font-size:13px;
+    font-weight:800;
+    text-align:right;
+    word-break:break-word;
+}
+
+.amount{
+    color:#6fd0ff;
+    font-size:20px;
+}
+
+/* COPY */
+.copy-account{
+    cursor:pointer;
+    color:#70cbf5;
+    padding:8px 10px;
+    border-radius:8px;
+    background:rgba(34,158,217,.08);
+}
+
+.copy-hint{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-top:4px;
+}
+
+/* FORMS */
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-label{
+    display:block;
+    color:var(--silver);
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+input,
+select{
+    width:100%;
+    background:#070d13;
+    border:1px solid var(--border);
+    color:#fff;
+    border-radius:12px;
+    padding:13px;
+    outline:none;
+    font-size:13px;
+}
+
+input:focus,
+select:focus{
+    border-color:var(--blue);
+}
+
+input[type="file"]{
+    padding:10px;
+    color:var(--silver);
+}
+
+.file-box{
+    border:1px dashed rgba(34,158,217,.35);
+    background:rgba(34,158,217,.04);
+    border-radius:14px;
+    padding:15px;
+}
+
+.file-name{
+    margin-top:8px;
+    color:#70cbf5;
+    font-size:11px;
+    word-break:break-all;
+}
+
+/* CHANNEL */
+.channel-box{
+    background:rgba(34,158,217,.06);
+    border:1px solid rgba(34,158,217,.18);
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:15px;
+}
+
+.channel-link{
+    color:#70cbf5;
+    text-decoration:none;
+    font-weight:900;
+    font-size:13px;
+}
+
+/* ORDERS */
+.order{
+    background:#091019;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:11px;
+}
+
+.order-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.order-name{
+    font-weight:900;
+    font-size:14px;
+}
+
+.order-id{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:4px;
+}
+
+.order-meta{
+    margin-top:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.meta{
+    background:#060b10;
+    padding:9px;
+    border-radius:10px;
+}
+
+.meta span{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.meta strong{
+    display:block;
+    font-size:11px;
+    margin-top:3px;
+    word-break:break-word;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    padding:6px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:900;
+}
+
+.status-pending{
+    color:#f5c75c;
+    background:rgba(245,185,66,.1);
+}
+
+.status-approved{
+    color:#54df80;
+    background:rgba(34,197,94,.1);
+}
+
+.status-rejected{
+    color:#ff7777;
+    background:rgba(239,68,68,.1);
+}
+
+/* CONTACT */
+.contact-card{
+    text-align:center;
+    padding:25px 18px;
+}
+
+.telegram-logo{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:var(--blue);
+    margin:0 auto 14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+}
+
+/* NAV */
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:520px;
+    z-index:30;
+    background:rgba(5,8,13,.94);
+    backdrop-filter:blur(18px);
+    border-top:1px solid var(--border);
+    padding:9px 8px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.nav-btn{
+    background:none;
+    border:0;
+    color:var(--muted);
+    padding:7px 4px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:700;
+}
+
+.nav-icon{
+    display:block;
+    font-size:18px;
+    margin-bottom:3px;
+}
+
+.nav-btn.active{
+    color:var(--blue);
+}
+
+/* ADMIN */
+.admin-stat{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#091019;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:12px 8px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:20px;
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.admin-order-actions{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.admin-order-actions .btn{
+    flex:1;
+    padding:10px;
+    font-size:11px;
+}
+
+/* EMPTY */
+.empty{
+    text-align:center;
+    padding:35px 15px;
+    color:var(--muted);
+}
+
+.empty-icon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+/* NOTICE */
+.notice{
+    background:rgba(34,158,217,.07);
+    border:1px solid rgba(34,158,217,.16);
+    border-radius:13px;
+    padding:12px;
+    color:#9fdfff;
+    font-size:11px;
+    line-height:1.5;
+    margin-bottom:15px;
+}
+
+@keyframes logoPulse{
+    0%,100%{transform:translateY(0);box-shadow:0 8px 25px rgba(201,154,59,.18)}
+    50%{transform:translateY(-2px);box-shadow:0 10px 28px rgba(47,143,216,.28)}
+}
+@keyframes brandGlow{
+    0%,100%{filter:drop-shadow(0 0 0 rgba(201,154,59,0))}
+    50%{filter:drop-shadow(0 0 7px rgba(201,154,59,.22))}
+}
+@keyframes buttonShimmer{
+    0%{background-position:0% 50%}
+    100%{background-position:200% 50%}
+}
+.btn-primary{background-size:200% 100%;animation:buttonShimmer 7s linear infinite}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important}}
+
+@media(max-width:360px){
+
+    .hero h1{
+        font-size:27px;
+    }
+
+    .product-bottom{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .product-bottom .btn{
+        width:100%;
+    }
+}
+
+/* ADMIN + LEDGER */
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px}
+.stat{min-height:78px}
+.stat strong{font-size:19px}
+.ledger-row{background:#091019;border:1px solid var(--border);border-radius:14px;padding:13px;margin-bottom:9px}
+.ledger-top{display:flex;justify-content:space-between;gap:10px}
+.ledger-title{font-weight:900;font-size:13px}
+.ledger-meta{color:var(--muted);font-size:10px;margin-top:4px}
+.ledger-amount{font-weight:900;color:#70cbf5;white-space:nowrap}
+.admin-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.small-btn{padding:9px 10px;font-size:10px}
+.admin-login{margin-bottom:14px}
+.badge-admin{display:inline-flex;padding:5px 8px;border-radius:20px;background:rgba(34,158,217,.1);color:#70cbf5;font-size:10px;font-weight:900}
+.danger-note{color:#ff8b8b;font-size:10px;line-height:1.5;margin-top:8px}
+.preview{width:100%;max-height:240px;object-fit:contain;border-radius:12px;margin-top:10px;border:1px solid var(--border);display:none}
+@media(max-width:360px){.admin-grid{grid-template-columns:1fr 1fr}.admin-tools{grid-template-columns:1fr}}
+
+
+/* CATEGORY SWITCHER: show only the selected store section */
+.category-switcher{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 20px}
+.category-btn{border:1px solid rgba(34,158,217,.28);background:#0b1118;color:#b9c2cc;border-radius:13px;padding:14px 10px;font-size:13px;font-weight:900;cursor:pointer;transition:.2s}
+.category-btn.active{background:linear-gradient(135deg,#229ed9,#1768a6);border-color:#70cbf5;color:#fff;box-shadow:0 8px 22px rgba(34,158,217,.18)}
+.catalog-section{display:none}
+.catalog-section.active{display:block}
+
+
+/* Bright electric-blue + gold finish */
+.card{border:1px solid rgba(32,167,255,.26);box-shadow:0 10px 28px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,217,90,.06)}
+.btn-primary{background:linear-gradient(135deg,#19aaff,#0862d4);border:1px solid rgba(255,217,90,.62);box-shadow:0 6px 20px rgba(0,139,255,.24);color:#fff}
+.category-btn.active{border-color:#ffd95a;box-shadow:0 0 0 1px rgba(255,217,90,.2),0 5px 18px rgba(0,139,255,.15)}
+.price{color:#ffda55}
+.rules-toggle{width:100%;margin-top:10px;padding:10px 12px;border:1px solid rgba(255,217,90,.5);border-radius:10px;background:rgba(18,126,211,.13);color:#ffda55;font-weight:800;cursor:pointer}
+.rules-panel{display:none;margin-top:10px;padding:12px;border-radius:10px;border:1px solid rgba(32,167,255,.28);background:rgba(3,18,33,.78);font-size:13px;line-height:1.8;color:#e7f4ff}
+.rules-panel.open{display:block}.rules-panel strong{color:#ffda55}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HEADER -->
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <div class="logo" aria-label="SLAYER FX mark">SF</div>
+
+            <div>
+                <div class="brand-title">
+                    SLAYER FX™
+                </div>
+
+                <div class="brand-sub">
+                    Instant Funded Accounts
+                </div>
+            </div>
+
+        </div>
+
+        <button
+            class="btn btn-secondary"
+            onclick="openTelegram()">
+            Telegram
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+    <div class="hero">
+
+        <div class="badge">
+            ⚡ INSTANT FUNDING
+        </div>
+
+        <h1>
+            Get Your<br>
+            <span>Funded Account</span>
+        </h1>
+
+        <p>
+            Choose your account, complete your
+            Telebirr payment and submit your
+            payment proof.
+        </p>
+
+    </div>
+
+
+    <div class="card p2p-teaser" style="margin:12px 0 20px;padding:18px;border-color:rgba(242,183,5,.4)">
+        <div class="badge">💱 P2P USD SERVICE</div>
+        <h2 style="margin:8px 0;color:var(--blue)">Buy USD with ETB</h2>
+        <p class="muted" style="line-height:1.6;margin-bottom:14px">Buyer-only exchange service. View the administrator-managed rates and calculate your ETB payment.</p>
+        <button class="btn btn-primary full" onclick="showPage('p2p')">Open P2P — Buy USD</button>
+    </div>
+    <div class="section-title">Funded Accounts</div>
+    <p class="muted" style="margin:0 0 14px">Choose your funded account and review its rules before purchase.</p>
+    <div class="card product-card">
+        <div class="product-top"><div><div class="product-name">GFT 1K INSTANT</div><div class="product-type">Goat Funded Trader</div></div><div class="price" id="homeGftPrice">350 <small>ETB</small></div></div>
+        <div class="product-bottom"><div class="muted">⚡ Instant Account</div><button class="btn btn-primary" onclick="selectProduct('GFT $1K Instant Account')">Buy Now</button></div>
+        <button type="button" class="rules-toggle" onclick="toggleRules(this)">📋 View Account Rules</button><div class="rules-panel"><strong>GFT 1K INSTANT — Rules</strong><br>• Max daily loss: 3%<br>• Max total loss: 6%<br>• Minimum withdrawal: $100<br>• Maximum withdrawal: $100<br>• Consistency rule: 15%</div>
+    </div>
+    <div class="card product-card">
+        <div class="product-top"><div><div class="product-name">PROPANIUM 1K 1 STEP</div><div class="product-type">Propanium</div></div><div class="price" id="homePropPrice">300 <small>ETB</small></div></div>
+        <div class="product-bottom"><div class="muted">⚡ 1-Step Challenge</div><button class="btn btn-primary" onclick="selectProduct('Propanium $1K 1-Step Account')">Buy Now</button></div>
+        <button type="button" class="rules-toggle" onclick="toggleRules(this)">📋 View Account Rules</button><div class="rules-panel"><strong>PROPANIUM 1K 1 STEP — Rules</strong><br>• Profit share: 100%<br>• Withdrawal: $100<br>• No consistency rule<br>• Profit target: 8%<br>• Max daily loss: 3%<br>• Max total loss: 6%<br>• Stop-loss per trade: 2%</div>
+    </div>
+
+    <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center;margin:22px 0">
+        <div><div style="font-size:25px;font-weight:900;color:var(--gold-light)">72+</div><div class="muted">Orders</div></div>
+        <div><div style="font-size:25px;font-weight:900;color:var(--gold-light)">7K+ ETB</div><div class="muted">Transactions</div></div>
+    </div>
+
+    <div class="section-title">
+        Why SLAYER FX™?
+    </div>
+
+
+    <div class="info-grid">
+
+        <div class="info-box">
+            <strong>⚡ Instant</strong>
+            <span>Fast account delivery</span>
+        </div>
+
+        <div class="info-box">
+            <strong>💳 Telebirr</strong>
+            <span>Easy local payment</span>
+        </div>
+
+        <div class="info-box">
+            <strong>🧾 Proof</strong>
+            <span>Submit payment proof</span>
+        </div>
+
+        <div class="info-box">
+            <strong>📲 Support</strong>
+            <span>Telegram support</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PRODUCTS / ACCOUNT STORE -->
+<section id="buy" class="page">
+    <div class="section-title">Products — Funded Accounts</div>
+    <p class="muted" style="margin-bottom:14px">Only the two available funded accounts are listed here.</p>
+    <div class="card product-card">
+        <div class="product-top"><div><div class="product-name">GFT 1K INSTANT</div><div class="product-type">Goat Funded Trader</div></div><div class="price" id="storeGftPrice">350 <small>ETB</small></div></div>
+        <button class="btn btn-primary full" style="margin-top:18px" onclick="selectProduct('GFT $1K Instant Account')">Buy Now</button>
+        <button type="button" class="rules-toggle" onclick="toggleRules(this)">📋 View Account Rules</button><div class="rules-panel">• Max daily loss: 3%<br>• Max total loss: 6%<br>• Minimum withdrawal: $100<br>• Maximum withdrawal: $100<br>• Consistency rule: 15%</div>
+    </div>
+    <div class="card product-card">
+        <div class="product-top"><div><div class="product-name">PROPANIUM 1K 1 STEP</div><div class="product-type">Propanium</div></div><div class="price" id="storePropPrice">300 <small>ETB</small></div></div>
+        <button class="btn btn-primary full" style="margin-top:18px" onclick="selectProduct('Propanium $1K 1-Step Account')">Buy Now</button>
+        <button type="button" class="rules-toggle" onclick="toggleRules(this)">📋 View Account Rules</button><div class="rules-panel">• Profit share: 100%<br>• Withdrawal: $100<br>• No consistency rule<br>• Profit target: 8%<br>• Max daily loss: 3%<br>• Max total loss: 6%<br>• Stop-loss per trade: 2%</div>
+    </div>
+</section>
+
+<!-- P2P BUY USD -->
+<section id="p2p" class="page">
+    <div class="section-title">P2P — Buy USD</div>
+    <div class="notice">BUY USD ONLY. Customers cannot sell USD/USDT or publish exchange offers. Rates are administrator-managed, not live market quotes.</div>
+    <div class="grid-two" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0">
+      <div class="card"><div class="muted" style="font-size:11px">USD BUYING RATE</div><div class="price" id="p2pBuyingRate">Not set</div><small>ETB / USD</small></div>
+      <div class="card"><div class="muted" style="font-size:11px">USD SELLING RATE</div><div class="price" id="p2pSellingRate">Not set</div><small>ETB / USD · display only</small></div>
+    </div>
+    <div class="card">
+      <div class="form-group"><label class="form-label" for="usdAmount">USD amount to buy</label><input id="usdAmount" type="number" min="0.01" step="0.01" placeholder="Enter USD amount" oninput="calculateP2P()"></div>
+      <div class="payment-line"><span class="payment-label">Buying rate</span><strong id="calcRate">Not configured</strong></div>
+      <div class="payment-line"><span class="payment-label">Total ETB payment</span><strong class="amount" id="calcTotal">— ETB</strong></div>
+      <div class="form-group" style="margin-top:15px"><label class="form-label" for="p2pMethod">Payment method</label><select id="p2pMethod"><option value="Telebirr">Telebirr</option></select></div>
+      <button class="btn btn-primary full" onclick="startP2POrder()">Continue to Payment</button>
+      <p class="muted" id="p2pValidation" style="font-size:12px;margin-top:10px">Enter a valid USD amount. The buying rate must be configured by an administrator.</p>
+    </div>
+    <div class="notice" style="margin-top:14px">Payment is manually verified by the administrator. A transaction ID alone does not confirm payment. No escrow service is provided.</div>
+    <div class="card" id="p2pOrderStatus" style="display:none;margin-top:14px"><strong>Latest P2P order</strong><p id="p2pStatusText" class="muted" style="margin-top:8px">Pending admin verification</p></div>
+</section>
+
+<!-- ADMIN PANEL — FRONTEND PROTOTYPE ONLY -->
+<section id="admin" class="page">
+    <div class="section-title">Admin Panel</div>
+    <div class="notice" style="border-color:rgba(245,185,66,.4)">Frontend prototype only: HTML cannot provide secure server-side authentication or shared database storage. Do not use this local settings panel as production security. Connect a backend before accepting real orders.</div>
+    <div class="card">
+      <h3 style="margin-bottom:12px">Funded Account Prices</h3>
+      <div class="form-group"><label class="form-label" for="adminGftPrice">GFT 1K INSTANT price (ETB)</label><input id="adminGftPrice" type="number" min="0.01" step="0.01" value="350"></div>
+      <div class="form-group"><label class="form-label" for="adminPropPrice">PROPANIUM 1K 1 STEP price (ETB)</label><input id="adminPropPrice" type="number" min="0.01" step="0.01" value="300"></div>
+      <h3 style="margin:18px 0 12px">P2P Exchange Rates</h3>
+      <div class="form-group"><label class="form-label" for="adminBuyRate">USD Buying Rate (ETB)</label><input id="adminBuyRate" type="number" min="0.01" step="0.01" placeholder="Set buying rate"></div>
+      <div class="form-group"><label class="form-label" for="adminSellRate">USD Selling Rate (ETB)</label><input id="adminSellRate" type="number" min="0.01" step="0.01" placeholder="Set selling rate"></div>
+      <button class="btn btn-primary full" onclick="saveLocalSettings()">Save Settings on This Device</button>
+      <p class="muted" style="font-size:11px;margin-top:10px">Settings are stored only in this browser's local storage. They are not secure, not shared with customers on other devices, and are not a real backend admin system.</p>
+    </div>
+    <div class="card" style="margin-top:14px"><h3>Recent P2P Orders</h3><div id="adminOrdersList" class="muted" style="font-size:12px;margin-top:10px">No locally recorded P2P orders.</div></div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment" class="page">
+
+    <div class="section-title">
+        Payment
+    </div>
+
+
+    <div class="notice">
+
+        Send the displayed account price through <b>Telebirr</b>.
+        After payment, enter your Telebirr Transaction ID within 15 minutes. If time runs out, this order will be cancelled.
+
+    </div>
+
+    <div class="card" style="text-align:center;border-color:rgba(245,185,66,.35)">
+        <div style="font-size:12px;color:var(--silver);margin-bottom:6px">TIME LEFT TO COMPLETE PAYMENT</div>
+        <div id="paymentCountdown" style="font-size:30px;font-weight:900;color:var(--gold-light);font-variant-numeric:tabular-nums">15:00</div>
+        <div id="paymentTimerStatus" style="font-size:12px;color:var(--silver);margin-top:6px">Enter your Transaction ID before the timer expires.</div>
+    </div>
+
+
+    <div class="card payment-box">
+
+        <div class="payment-icon">
+            T
+        </div>
+
+        <div class="payment-name">
+            TELEBIRR
+        </div>
+
+
+        <div class="muted"
+             style="font-size:12px;margin-top:5px">
+            Payment Method
+        </div>
+
+
+        <div class="payment-line"
+             style="margin-top:15px">
+
+            <div class="payment-label">
+                Selected Account
+            </div>
+
+            <div
+                class="payment-value"
+                id="paymentProduct">
+                —
+            </div>
+
+        </div>
+
+
+        <div class="payment-line">
+
+            <div class="payment-label">
+                Account Name
+            </div>
+
+            <div class="payment-value">
+                SITI
+            </div>
+
+        </div>
+
+
+        <div class="payment-line">
+
+            <div class="payment-label">
+                Account Number
+            </div>
+
+            <div class="payment-value">
+
+                <div
+                    class="copy-account"
+                    onclick="copyAccountNumber()">
+
+                    0965409776
+
+                    <span class="copy-hint">
+                        Tap to copy
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="payment-line">
+
+            <div class="payment-label">
+                Amount
+            </div>
+
+            <div class="payment-value amount" id="paymentAmount">
+                350 ETB
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="btn btn-primary full"
+        id="enterTransactionButton"
+        onclick="goToTransactionForm()">
+
+        I Have Paid — Enter Transaction ID
+
+    </button>
+
+
+    <button
+        class="btn btn-secondary full"
+        onclick="openTelegram()">
+
+        💬 Contact Support
+
+    </button>
+
+    <button
+        class="btn btn-danger full"
+        style="margin-top:10px"
+        onclick="cancelCurrentOrder()">
+        ❌ Cancel Order
+    </button>
+
+</section>
+
+
+<!-- PROOF -->
+<section id="proof" class="page">
+
+    <div class="section-title">
+        Submit Payment Proof
+    </div>
+
+
+    <div class="notice">
+
+        Select your account, then open Telegram and send
+        your Telebirr payment screenshot directly to the seller.
+
+    </div>
+
+
+    <div class="channel-box">
+
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">
+            📢 OFFICIAL TELEGRAM CHANNEL
+        </div>
+
+        <a
+            class="channel-link"
+            href="https://t.me/slayer_fx9"
+            target="_blank">
+
+            @slayer_fx9
+
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <!-- ACCOUNT -->
+        <div class="form-group">
+
+            <label class="form-label">
+                Account
+            </label>
+
+            <select id="proofProduct">
+                <option value="">Select product</option>
+                <option value="GFT $1K Instant Account">GFT $1K Instant Account — 350 ETB</option>
+                <option value="Propanium $1K 1-Step Account">Propanium $1K 1-Step Account — 300 ETB</option>
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+            <label class="form-label" for="promoCode">Promo Code (optional)</label>
+            <input type="text" id="promoCode" placeholder="Enter promo code (optional)" autocomplete="off">
+        </div>
+
+        <!-- TRANSACTION ID ONLY; NO SCREENSHOT UPLOAD -->
+        <div class="form-group">
+            <label class="form-label" for="transactionId">Telebirr Transaction ID</label>
+            <input type="text" id="transactionId" placeholder="Enter your Telebirr Transaction ID" autocomplete="off" required>
+        </div>
+
+        <button
+            class="btn btn-primary full"
+            type="button"
+            onclick="sendProofToTelegram()">
+            📲 Send Order Details to Telegram
+        </button>
+
+        <div class="notice" style="margin-top:12px;margin-bottom:0">
+            Your order details, account name, amount, and Transaction ID will be prepared in Telegram. No screenshot or buyer username is requested.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact" class="page">
+
+    <div class="section-title">
+        Contact
+    </div>
+
+    <div class="card contact-card">
+
+        <div class="telegram-logo">✈</div>
+
+        <div style="font-size:20px;font-weight:900;margin-bottom:7px">
+            SLAYER FX™
+        </div>
+
+        <div class="muted" style="font-size:12px;margin-bottom:16px">
+            Visit the official SLAYER FX™ Telegram channel.
+        </div>
+
+        <button class="btn btn-primary full" onclick="openTelegram()">
+            💬 Open Telegram
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+    <button class="nav-btn active" onclick="showPage('home',this)">
+        <span class="nav-icon">⌂</span>
+        Home
+    </button>
+
+    <button class="nav-btn" onclick="showPage('buy',this)">
+        <span class="nav-icon">🛒</span>
+        Products
+    </button>
+
+    <button class="nav-btn" onclick="showPage('p2p',this)">
+        <span class="nav-icon">💱</span>
+        P2P
+    </button>
+
+    <button class="nav-btn" onclick="showPage('payment',this)">
+        <span class="nav-icon">💳</span>
+        Payment
+    </button>
+
+    <button class="nav-btn" onclick="showPage('contact',this)">
+        <span class="nav-icon">✈</span>
+        Telegram
+    </button>
+    <button class="nav-btn" onclick="showPage('admin',this)">
+        <span class="nav-icon">⚙</span>
+        Admin
+    </button>
+
+</nav>
+
+</div>
+
+
+<script>
+/* =========================================================
+   SLAYER FX™ DIRECT TELEGRAM ORDER SYSTEM
+   Seller Telegram: @SLAYER_FX99
+   ========================================================= */
+
+const SELLER_TELEGRAM = "SLAYER_FX99";
+
+let selectedProduct = "";
+const PAYMENT_WINDOW_SECONDS = 15 * 60;
+let paymentDeadline = 0;
+let paymentTimerInterval = null;
+let orderExpired = false;
+
+
+function toggleRules(button) {
+    const panel = button.nextElementSibling;
+    if (panel) { panel.classList.toggle("open"); button.textContent = panel.classList.contains("open") ? "✖ Hide Account Rules" : "📋 View Account Rules"; }
+}
+
+function showCategory(pageId, category, button) {
+    const page = document.getElementById(pageId);
+    if (!page) return;
+    page.querySelectorAll('.catalog-section').forEach(function(section) {
+        section.classList.toggle('active', section.dataset.catalog === category);
+    });
+    page.querySelectorAll('.category-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.category === category);
+    });
+}
+
+function showPage(id, navButton) {
+
+    document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+    });
+
+    const page = document.getElementById(id);
+
+    if (page) {
+        page.classList.add("active");
+    }
+
+    document.querySelectorAll(".nav-btn").forEach(function(button) {
+        button.classList.remove("active");
+    });
+
+    if (navButton) {
+        navButton.classList.add("active");
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* Price helper */
+function getProductPrice(product) {
+    const prices = {
+        "GFT $1K Instant Account": Number(localStorage.getItem("slayer_gft_price") || 350),
+        "Propanium $1K 1-Step Account": Number(localStorage.getItem("slayer_prop_price") || 300)
+    };
+    return prices[product] || 0;
+}
+/* A website cannot automatically attach a local file to a Telegram chat.
+   The buyer selects the screenshot here, then attaches it again in Telegram. */
+function openTelegram() {
+    // General Telegram buttons should open the official channel.
+    window.location.href = "https://t.me/slayer_fx9";
+}
+
+/* BUY NOW → PAYMENT METHOD → 15-MINUTE TIMER → TRANSACTION ID → TELEGRAM */
+function selectProduct(product) {
+    selectedProduct = product;
+    orderExpired = false;
+    const promoField = document.getElementById("promoCode");
+    if (promoField) promoField.value = "";
+    const transactionField = document.getElementById("transactionId");
+    if (transactionField) transactionField.value = "";
+    paymentDeadline = Date.now() + PAYMENT_WINDOW_SECONDS * 1000;
+    const paymentProduct = document.getElementById("paymentProduct");
+    const proofProduct = document.getElementById("proofProduct");
+    const paymentAmount = document.getElementById("paymentAmount");
+    const price = getProductPrice(product);
+    if (paymentProduct) paymentProduct.textContent = product;
+    if (proofProduct) proofProduct.value = product;
+    if (paymentAmount) paymentAmount.textContent = price + " ETB";
+    const timerStatus = document.getElementById("paymentTimerStatus");
+    const countdown = document.getElementById("paymentCountdown");
+    const enterButton = document.getElementById("enterTransactionButton");
+    if (countdown) countdown.style.color = "var(--gold-light)";
+    if (timerStatus) { timerStatus.textContent = "Enter your Transaction ID before the timer expires."; timerStatus.style.color = "var(--silver)"; }
+    if (enterButton) { enterButton.disabled = false; enterButton.style.opacity = "1"; }
+    if (paymentTimerInterval) clearInterval(paymentTimerInterval);
+    updatePaymentCountdown();
+    paymentTimerInterval = setInterval(updatePaymentCountdown, 1000);
+    showPage("payment");
+}
+
+function updatePaymentCountdown() {
+    const countdown = document.getElementById("paymentCountdown");
+    const timerStatus = document.getElementById("paymentTimerStatus");
+    const enterButton = document.getElementById("enterTransactionButton");
+    const secondsLeft = Math.max(0, Math.ceil((paymentDeadline - Date.now()) / 1000));
+    if (countdown) {
+        const mins = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
+        const secs = String(secondsLeft % 60).padStart(2, "0");
+        countdown.textContent = mins + ":" + secs;
+    }
+    if (secondsLeft <= 0 && !orderExpired) {
+        orderExpired = true;
+        if (paymentTimerInterval) clearInterval(paymentTimerInterval);
+        if (countdown) { countdown.textContent = "00:00"; countdown.style.color = "var(--red)"; }
+        if (timerStatus) { timerStatus.textContent = "Order cancelled — the 15-minute payment window expired. Please start again."; timerStatus.style.color = "var(--red)"; }
+        if (enterButton) { enterButton.disabled = true; enterButton.style.opacity = ".45"; }
+        alert("Your order has been cancelled because the 15-minute payment window expired. Please select the account again to start a new order.");
+    }
+}
+
+function cancelCurrentOrder() {
+    if (paymentTimerInterval) clearInterval(paymentTimerInterval);
+    paymentTimerInterval = null;
+    paymentDeadline = 0;
+    orderExpired = true;
+    selectedProduct = "";
+    const countdown = document.getElementById("paymentCountdown");
+    const timerStatus = document.getElementById("paymentTimerStatus");
+    const enterButton = document.getElementById("enterTransactionButton");
+    if (countdown) { countdown.textContent = "CANCELLED"; countdown.style.color = "var(--red)"; }
+    if (timerStatus) { timerStatus.textContent = "Order cancelled. Select an account to start again."; timerStatus.style.color = "var(--red)"; }
+    if (enterButton) { enterButton.disabled = true; enterButton.style.opacity = ".45"; }
+    alert("Your order has been cancelled.");
+    showPage("buy");
+}
+
+function goToTransactionForm() {
+    if (orderExpired || !paymentDeadline || Date.now() >= paymentDeadline) {
+        updatePaymentCountdown();
+        alert("This order has expired. Please select the account again to start a new 15-minute order.");
+        return;
+    }
+    showPage("proof");
+}
+
+/* Validate order details and open seller chat with order information only. */
+function sendProofToTelegram() {
+    if (orderExpired || !paymentDeadline || Date.now() >= paymentDeadline) {
+        updatePaymentCountdown();
+        alert("This order has expired. Please select the account again to start a new order.");
+        return;
+    }
+    const productElement = document.getElementById("proofProduct");
+    const transactionElement = document.getElementById("transactionId");
+    const product = (productElement && productElement.value) || selectedProduct;
+    const transactionId = transactionElement ? transactionElement.value.trim() : "";
+    const promoElement = document.getElementById("promoCode");
+    const promoCode = promoElement ? promoElement.value.trim() : "";
+
+    if (!product) {
+        alert("Please select the account you purchased.");
+        return;
+    }
+    if (!transactionId) {
+        alert("Please enter your Telebirr Transaction ID.");
+        if (transactionElement) transactionElement.focus();
+        return;
+    }
+
+    let message;
+    if (currentP2POrder && product === "P2P USD Purchase") {
+        currentP2POrder.transactionId=transactionId;
+        currentP2POrder.status="Submitted — awaiting admin payment verification";
+        const orders=JSON.parse(localStorage.getItem("slayer_p2p_orders")||"[]");orders.unshift(currentP2POrder);localStorage.setItem("slayer_p2p_orders",JSON.stringify(orders.slice(0,30)));
+        message="Hello SLAYER FX™ 👋\n\nP2P USD BUY ORDER\nOrder ID: "+currentP2POrder.id+"\nUSD Amount: "+currentP2POrder.usdAmount+" USD\nBuying Rate: "+currentP2POrder.buyRate+" ETB/USD\nTotal: "+currentP2POrder.totalETB+" ETB\nPayment Method: "+currentP2POrder.paymentMethod+"\nTransaction ID: "+transactionId+"\nStatus: Awaiting admin verification\n\nI have completed payment. I will attach my payment proof in this chat.";
+        const box=document.getElementById("p2pOrderStatus"),txt=document.getElementById("p2pStatusText");if(box)box.style.display="block";if(txt)txt.textContent="Order "+currentP2POrder.id+" — Submitted, awaiting admin payment verification.";renderAdminOrders();
+    } else {
+        const price = getProductPrice(product);
+        message = "Hello SLAYER FX™ 👋\n\n" +
+            "I want to order: " + product + "\n" +
+            "Price: " + price + " ETB\n" +
+            (promoCode ? "Promo Code: " + promoCode + "\n" : "") +
+            "Transaction id 🆔 " + transactionId + "\n\n" +
+            "I have completed the payment. I will attach my Telebirr payment screenshot in this chat.";
+    }
+    if (paymentTimerInterval) clearInterval(paymentTimerInterval);
+    window.location.href = "https://t.me/" + SELLER_TELEGRAM + "?text=" + encodeURIComponent(message);
+}
+
+/* P2P buyer-only frontend prototype. Production order approval and shared settings require a backend. */
+let currentP2POrder = null;
+function getP2PRates(){
+  return {buy:Number(localStorage.getItem("slayer_p2p_buy_rate")||0),sell:Number(localStorage.getItem("slayer_p2p_sell_rate")||0)};
+}
+function renderP2PRates(){
+  const r=getP2PRates();
+  const b=r.buy>0?r.buy.toLocaleString()+" ETB":"Not set";
+  const s=r.sell>0?r.sell.toLocaleString()+" ETB":"Not set";
+  ["p2pBuyingRate"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=b;});
+  const se=document.getElementById("p2pSellingRate");if(se)se.textContent=s;
+  const cr=document.getElementById("calcRate");if(cr)cr.textContent=r.buy>0?r.buy.toLocaleString()+" ETB / USD":"Not configured";
+  calculateP2P();
+}
+function calculateP2P(){
+  const field=document.getElementById("usdAmount"),total=document.getElementById("calcTotal"),msg=document.getElementById("p2pValidation");
+  if(!field||!total)return;
+  const raw=field.value,amount=Number(raw),rate=getP2PRates().buy;
+  if(raw.trim()===""||!Number.isFinite(amount)||amount<=0){total.textContent="— ETB";if(msg)msg.textContent="Enter a valid amount greater than zero.";return;}
+  if(rate<=0){total.textContent="— ETB";if(msg)msg.textContent="The administrator has not configured the USD buying rate yet.";return;}
+  total.textContent=(amount*rate).toLocaleString(undefined,{maximumFractionDigits:2})+" ETB";
+  if(msg)msg.textContent="Review the total before continuing. Buyer-only service.";
+}
+function startP2POrder(){
+  const field=document.getElementById("usdAmount"),amount=Number(field&&field.value),rates=getP2PRates();
+  if(!field||field.value.trim()===""||!Number.isFinite(amount)||amount<=0){alert("Enter a valid USD amount greater than zero.");return;}
+  if(rates.buy<=0){alert("P2P buying rate is not configured yet. Please contact support.");return;}
+  const total=Number((amount*rates.buy).toFixed(2));
+  currentP2POrder={id:"P2P-"+Date.now(),usdAmount:amount,buyRate:rates.buy,totalETB:total,paymentMethod:(document.getElementById("p2pMethod")||{}).value||"Telebirr",status:"Pending payment verification",createdAt:new Date().toISOString()};
+  selectedProduct="P2P USD Purchase";orderExpired=false;paymentDeadline=Date.now()+PAYMENT_WINDOW_SECONDS*1000;
+  const product=document.getElementById("paymentProduct"),payAmount=document.getElementById("paymentAmount");
+  if(product)product.textContent=amount+" USD @ "+rates.buy+" ETB/USD";
+  if(payAmount)payAmount.textContent=total.toLocaleString()+" ETB";
+  const pf=document.getElementById("proofProduct");if(pf)pf.value="";
+  const tx=document.getElementById("transactionId");if(tx)tx.value="";
+  const status=document.getElementById("paymentTimerStatus");if(status)status.textContent="Complete payment and submit your transaction ID within 15 minutes.";
+  if(paymentTimerInterval)clearInterval(paymentTimerInterval);updatePaymentCountdown();paymentTimerInterval=setInterval(updatePaymentCountdown,1000);
+  showPage("payment");
+}
+function saveLocalSettings(){
+  const fields=["adminGftPrice","adminPropPrice","adminBuyRate","adminSellRate"];
+  const vals=fields.map(id=>{const e=document.getElementById(id);return e?Number(e.value):NaN;});
+  if(vals.some(v=>!Number.isFinite(v)||v<=0)){alert("All prices and exchange rates must be positive numbers.");return;}
+  ["slayer_gft_price","slayer_prop_price","slayer_p2p_buy_rate","slayer_p2p_sell_rate"].forEach((k,i)=>localStorage.setItem(k,String(vals[i])));
+  renderProductPrices();renderP2PRates();alert("Saved on this device only. A backend is required to sync securely with customers.");
+}
+function renderProductPrices(){
+  const g=Number(localStorage.getItem("slayer_gft_price")||350),p=Number(localStorage.getItem("slayer_prop_price")||300);
+  ["homeGftPrice","storeGftPrice"].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML=g.toLocaleString()+" <small>ETB</small>";});
+  ["homePropPrice","storePropPrice"].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML=p.toLocaleString()+" <small>ETB</small>";});
+  const ag=document.getElementById("adminGftPrice"),ap=document.getElementById("adminPropPrice");if(ag)ag.value=g;if(ap)ap.value=p;
+}
+function renderAdminOrders(){const el=document.getElementById("adminOrdersList");if(!el)return;const orders=JSON.parse(localStorage.getItem("slayer_p2p_orders")||"[]");el.innerHTML=orders.length?orders.map(o=>`<div class="payment-line"><span>${o.usdAmount} USD · ${o.totalETB} ETB · rate ${o.buyRate}</span><strong>${o.status}</strong></div>`).join(""):"No locally recorded P2P orders.";}
+
+/* Copy Telebirr account number */
+function copyAccountNumber() {
+
+    const number = "0965409776";
+
+    if (navigator.clipboard) {
+
+        navigator.clipboard.writeText(number)
+            .then(function() {
+                alert("Telebirr account number copied.");
+            })
+            .catch(function() {
+                prompt("Copy Telebirr account number:", number);
+            });
+
+    } else {
+
+        prompt("Copy Telebirr account number:", number);
+
+    }
+}
+
+
+/* Screenshot handling
+   The site does NOT upload/store payment screenshots.
+   Buyers send the screenshot directly in the seller's Telegram chat.
+*/
+renderProductPrices();
+renderP2PRates();
+renderAdminOrders();
+</script>
+
+</body>
+</html>
